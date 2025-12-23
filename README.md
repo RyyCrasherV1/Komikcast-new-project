@@ -2,10 +2,12 @@
 
 KomiCast adalah aplikasi web *content aggregator* untuk membaca komik (Manga, Manhwa, Manhua) yang dibangun menggunakan **Node.js**, **Express**, dan **MongoDB**. Aplikasi ini dilengkapi dengan fitur *scraping* otomatis, manajemen admin, dan optimasi SEO (Sitemap XML bergaya Yoast).
 
-## 🌐 Live Demo
+## 🌐 Live Demo & Preview
 
 Lihat aplikasi yang sudah berjalan (Live Preview) di sini:  
 👉 **[https://komikcast.work.gd/](https://komikcast.work.gd/)**
+
+![Preview Tampilan KomiCast](https://github.com/lelipitri23-dev/Komikcast/blob/main/694af7103cf560251f3b6765.png?raw=true)
 
 ---
 
