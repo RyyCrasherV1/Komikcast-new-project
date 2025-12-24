@@ -3,7 +3,8 @@ const mongoose = require('mongoose');
 const mangaSchema = new mongoose.Schema({
   title: { type: String, required: true },
   nativeTitle: String, // Contoh: 오늘만 사는 기사
-  slug: { type: String, unique: true },
+  // unique: true sudah otomatis membuat index, jadi tidak perlu didefinisikan lagi di bawah
+  slug: { type: String, unique: true }, 
   coverImage: String,
   type: { type: String, default: 'Manga' }, // Manhwa/Manga
   rating: { type: Number, default: 0 },
@@ -21,4 +22,11 @@ const mangaSchema = new mongoose.Schema({
   lastUpdated: { type: Date, default: Date.now }
 });
 
-module.exports = mongoose.model('Manga', mangaSchema);
+// Index untuk sorting 'Terupdate' (Wajib ada biar cepat)
+mangaSchema.index({ lastUpdated: -1 }); 
+
+// HAPUS baris ini karena sudah ada 'unique: true' di atas
+// mangaSchema.index({ slug: 1 }); <--- INI PENYEBAB WARNING
+
+const Manga = mongoose.model('Manga', mangaSchema);
+module.exports = Manga;
