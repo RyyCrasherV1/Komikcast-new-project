@@ -121,12 +121,25 @@ app.post('/admin/add-manga', protectAdmin, async (req, res) => {
 });
 
 // --- C. PUBLIC PAGES (Halaman Utama) ---
+// --- C. PUBLIC PAGES (Halaman Utama) ---
 app.get('/', async (req, res) => {
   try {
-    // Tambahkan .limit(36) agar tidak memuat semua database sekaligus
+    // OPTIMISASI QUERY:
     const mangas = await Manga.find()
+      // 1. .select: Hanya ambil field yang dibutuhkan tampilan kartu (Hemat Bandwidth)
+      .select('title slug coverImage type rating lastUpdated status chapters') 
+      
+      // 2. .slice: PENTING! Hanya ambil 2 chapter teratas dari array chapters yang ribuan itu
+      .slice('chapters', 2) 
+      
+      // 3. Sortir berdasarkan update terakhir
       .sort({ lastUpdated: -1 })
-      .limit(36);
+      
+      // 4. Batasi 36 komik
+      .limit(36)
+      
+      // 5. .lean(): Mengubah hasil Mongoose jadi JSON biasa (Jauh lebih ringan & cepat dirender)
+      .lean(); 
 
     res.render('index', { mangas });
   } catch (error) {
@@ -134,6 +147,7 @@ app.get('/', async (req, res) => {
     res.status(500).send("Terjadi kesalahan pada server.");
   }
 });
+
 
 // --- UPDATE ROUTE DAFTAR KOMIK (Filter & Sorting) ---
 app.get('/daftar-komik', async (req, res) => {
