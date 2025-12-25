@@ -497,7 +497,7 @@ const SITEMAP_LIMIT = 1000; // Batas URL per file sitemap
 // 1. SITEMAP INDEX (Induk)
 app.get('/sitemap_index.xml', async (req, res) => {
 try {
-const baseUrl = `${req.protocol}://${req.get('host')}`;
+const baseUrl = `https://${req.get('host')}`;
 const totalKomik = await Manga.countDocuments();
 const totalKomikPages = Math.ceil(totalKomik / SITEMAP_LIMIT);
 
@@ -533,7 +533,7 @@ res.status(500).end();
 
 // 2. SITEMAP PAGE (Halaman Statis)
 app.get('/page-sitemap.xml', (req, res) => {
-const baseUrl = `${req.protocol}://${req.get('host')}`;
+const baseUrl = `https://${req.get('host')}`;
 const now = new Date().toISOString();
 
 const staticPages = [{
@@ -576,7 +576,7 @@ res.send(xml);
 // 3. SITEMAP KOMIK DINAMIS (Support pagination: komik-sitemap.xml, komik-sitemap-2.xml)
 app.get(/^\/komik-sitemap(-(\d+))?\.xml$/, async (req, res) => {
 try {
-const baseUrl = `${req.protocol}://${req.get('host')}`;
+const baseUrl = `https://${req.get('host')}`;
 
 // Regex logic: Menangkap angka di URL. Jika tidak ada angka, berarti halaman 1.
 // URL: /komik-sitemap.xml -> page 1
